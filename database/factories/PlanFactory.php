@@ -17,7 +17,9 @@ class PlanFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->word(),
+            'url' => $this->faker->slug(),
+            'price' => number_format($this->faker->numberBetween(1000, 100000),2,'.',''),
         ];
     }
 }
