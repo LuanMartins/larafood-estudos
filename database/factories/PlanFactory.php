@@ -20,6 +20,7 @@ class PlanFactory extends Factory
             'name' => $this->faker->word(),
             'url' => $this->faker->slug(),
             'price' => number_format($this->faker->numberBetween(1000, 100000),2,'.',''),
+            'description' => $this->faker->paragraph(),
         ];
     }
 }
