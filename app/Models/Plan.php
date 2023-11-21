@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class Plan extends Model
 {
     use HasFactory, HasUuids;
+
+    protected $fillable = ['name','url','price'];
 }
