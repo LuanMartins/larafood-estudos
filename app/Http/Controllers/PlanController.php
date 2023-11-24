@@ -11,9 +11,9 @@ class PlanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $plans = Plan::paginate(15);
+        $plans = Plan::select(['name','price','url AS url-plan'])->paginate(15)->withQueryString();
 
         return Inertia::render('Plan/Index', ['plans' => $plans]);
     }

@@ -1,9 +1,10 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import Pagination from "@/Components/Pagination.vue";
 import { Head } from '@inertiajs/vue3';
 
-
 defineProps({plans: Object});
+
 </script>
 <template>
     <Head title="Plans" />
@@ -26,6 +27,7 @@ defineProps({plans: Object});
                             </tr>
                         </tbody>
                     </table>
+                    <Pagination :links="plans.links"/>
                 </div>
             </div>
         </div>
