@@ -13,7 +13,10 @@ class PlanController extends Controller
      */
     public function index(Request $request)
     {
-        $plans = Plan::select(['name','price','url AS url-plan'])->paginate(15)->withQueryString();
+        $totalPerpPage = $request->total_per_page ?? 15;
+        $page = $request->page ?? 1;
+
+        $plans = Plan::select(['name','price','url AS url-plan'])->paginate($totalPerpPage,['*'],'page',$page);
 
         return Inertia::render('Plan/Index', ['plans' => $plans]);
     }
