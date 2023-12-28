@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { formatCurrency } from '@/Helpers/currencyFormatter';
 import Pagination from "@/Components/Tables/Pagination.vue";
 import ItensPerPage from "@/Components/Tables/ItensPerPage.vue";
 import { Head, usePage, router } from '@inertiajs/vue3';
@@ -43,7 +44,7 @@ watchEffect(() => {
                         <tbody>
                             <tr v-for="item in plans.data">
                                 <td class="px-2 py-1 text-sm text-left">{{ item.name }}</td>
-                                <td class="px-2 py-1 text-sm text-left">{{ item.price }}</td>
+                                <td class="px-2 py-1 text-sm text-left">{{ formatCurrency(item.price) }}</td>
                             </tr>
                         </tbody>
                     </table>
