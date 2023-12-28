@@ -28,10 +28,6 @@ watchEffect(() => {
     }
 });
 
-/*watch(() => selectedValue.value , (newValue) => {
-    console.log(selectedValue.value);
-    selectedValue.value = newValue;
-}, { immediate: true });*/
 </script>
 
 <template>
