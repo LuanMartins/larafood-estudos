@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import Pagination from "@/Components/Pagination.vue";
+import Pagination from "@/Components/Tables/Pagination.vue";
+import ItensPerPage from "@/Components/Tables/ItensPerPage.vue";
 import { Head, usePage, router } from '@inertiajs/vue3';
 import { ref, watchEffect } from 'vue';
 
@@ -30,12 +31,7 @@ watchEffect(() => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <div class="text-right">
-                        <select class="border rounded py-1 mb-2" v-model="perPage" @change="updatePerPage">
-                            <option value="15">15</option>
-                            <option value="30">30</option>
-                            <option value="45">45</option>
-                            <option value="100">100</option>
-                        </select>
+                        <ItensPerPage :initialValue="'15'" routeName="plans.index" />
                     </div>
                     <table class="w-full border-collapse border">
                         <thead class="bg-gray-900 text-white">
