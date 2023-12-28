@@ -1,13 +1,26 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Pagination from "@/Components/Pagination.vue";
-import { Head, router } from '@inertiajs/vue3';
+import { Head, usePage, router } from '@inertiajs/vue3';
+import { ref, watchEffect } from 'vue';
 
-defineProps({plans: Object});
+defineProps({ plans: Object });
 
-const teste = (event) => {
-    router.get(route('plans.index')+`?total_per_page=${event.target.value}`);
+const page = usePage();
+const perPage = ref('15');
+
+const updatePerPage = (event) => {
+    perPage.value = event.target.value;
+    router.visit(route('plans.index') + `?total_per_page=${perPage.value}`);
 }
+
+watchEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const totalPerPage = queryParams.get('total_per_page');
+    if (totalPerPage) {
+        perPage.value = totalPerPage;
+    }
+});
 
 </script>
 <template>
@@ -17,7 +30,7 @@ const teste = (event) => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <div class="text-right">
-                        <select class="border rounded py-1 mb-2" @change="teste($event)">
+                        <select class="border rounded py-1 mb-2" v-model="perPage" @change="updatePerPage">
                             <option value="15">15</option>
                             <option value="30">30</option>
                             <option value="45">45</option>
