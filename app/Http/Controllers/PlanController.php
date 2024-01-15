@@ -15,8 +15,11 @@ class PlanController extends Controller
     {
         $totalPerpPage = $request->total_per_page ?? 15;
         $page = $request->page ?? 1;
+        $filter = $request->filter ?? '';
 
-        $plans = Plan::select(['name','price','url AS url-plan'])->paginate($totalPerpPage,['*'],'page',$page);
+        $plans = Plan::select(['name','price','url AS url-plan'])
+                ->where('name','LIKE', '%'.$filter.'%')
+                ->paginate($totalPerpPage,['*'],'page',$page);
 
         return Inertia::render('Plan/Index', ['plans' => $plans]);
     }

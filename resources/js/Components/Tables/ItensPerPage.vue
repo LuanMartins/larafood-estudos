@@ -7,7 +7,9 @@ const props = defineProps({
   routeName: String
 });
 
+const queryParams = new URLSearchParams(window.location.search);
 const selectedValue = ref(props.initialValue);
+const filterValue = queryParams.get('filter') || '';
 
 const perPageOptions = [
   { value: '15', text: '15' },
@@ -17,7 +19,7 @@ const perPageOptions = [
 ];
 
 const onChange = (event) => {
-  router.visit(route(props.routeName) + `?total_per_page=${selectedValue.value}`);
+  router.visit(route(props.routeName) + `?total_per_page=${selectedValue.value}&filter=${filterValue}`);
 };
 
 watchEffect(() => {

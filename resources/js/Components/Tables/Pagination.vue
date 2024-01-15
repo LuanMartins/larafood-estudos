@@ -14,6 +14,7 @@ const queryParams = new URLSearchParams(window.location.search);
 
 // Mantém o total_per_page atual ou define um padrão.
 const totalPerPage = queryParams.get('total_per_page') || '15';
+const filterValue = queryParams.get('filter') || '';
 
 // Atualiza os links com o parâmetro desejado.
 const updatedLinks = computed(() => {
@@ -23,6 +24,7 @@ const updatedLinks = computed(() => {
             if (link.url) {
                 const url = new URL(link.url, window.location.origin);
                 url.searchParams.set('total_per_page', totalPerPage);
+                url.searchParams.set('filter', filterValue)
                 link.url = url.toString();
             }
             return link;
