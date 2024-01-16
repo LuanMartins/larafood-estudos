@@ -18,14 +18,9 @@ class PlanService
     }
 
 
-    public function getPaginate(string $filter = '', int $page = 1, int $totalPerPage = 15): LengthAwarePaginator
+    public function getPaginate(array $request = []): LengthAwarePaginator
     {
-        $plansPaginated = $this->planRepository->getPaginate(
-            filter: $filter,
-            page: $page,
-            totalPerPage:$totalPerPage
-        );
 
-        return $plansPaginated;
+        return $this->planRepository->getPaginate($request);
     }
 }
