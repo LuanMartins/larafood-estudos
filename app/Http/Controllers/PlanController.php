@@ -17,15 +17,8 @@ class PlanController extends Controller
      */
     public function index(Request $request)
     {
-        $totalPerPage = $request->total_per_page ?? 15;
-        $page = $request->page ?? 1;
-        $filter = $request->filter ?? '';
 
-        $plans = $this->planService->getPaginate(
-            filter: $filter,
-            page: $page,
-            totalPerPage: $totalPerPage
-        );
+        $plans = $this->planService->getPaginate((array) $request->all());
 
         return Inertia::render('Plan/Index', ['plans' => $plans]);
     }
