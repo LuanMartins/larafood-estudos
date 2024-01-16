@@ -2,24 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Plan;
+use App\Services\PlanService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class PlanController extends Controller
 {
+    public function __construct(private PlanService $planService)
+    {
+
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $totalPerpPage = $request->total_per_page ?? 15;
+        $totalPerPage = $request->total_per_page ?? 15;
         $page = $request->page ?? 1;
         $filter = $request->filter ?? '';
 
-        $plans = Plan::select(['name','price','url AS url-plan'])
-                ->where('name','LIKE', '%'.$filter.'%')
-                ->paginate($totalPerpPage,['*'],'page',$page);
+        $plans = $this->planService->getPaginate(
+            filter: $filter,
+            page: $page,
+            totalPerPage: $totalPerPage
+        );
 
         return Inertia::render('Plan/Index', ['plans' => $plans]);
     }
