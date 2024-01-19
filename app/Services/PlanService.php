@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTO\Plan\FilterPlan;
 use App\Repositories\PlanRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
@@ -18,9 +19,9 @@ class PlanService
     }
 
 
-    public function getPaginate(array $request = []): LengthAwarePaginator
+    public function getPaginate(FilterPlan $filterPlanDto): LengthAwarePaginator
     {
 
-        return $this->planRepository->getPaginate($request);
+        return $this->planRepository->getPaginate($filterPlanDto);
     }
 }

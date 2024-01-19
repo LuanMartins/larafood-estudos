@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\Plan\FilterPlan;
 use App\Services\PlanService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -18,7 +19,12 @@ class PlanController extends Controller
     public function index(Request $request)
     {
 
-        $plans = $this->planService->getPaginate((array) $request->all());
+
+        $plans = $this->planService->getPaginate(new FilterPlan(
+            filter: $request->filter,
+            page: $request->page,
+            totalPerPage: $request->total_per_page
+        ));
 
         return Inertia::render('Plan/Index', ['plans' => $plans]);
     }
