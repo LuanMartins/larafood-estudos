@@ -10,7 +10,7 @@ class EditPlan
      * @return void
      */
     public function __construct(
-        public readonly int $id,
+        public readonly string $id,
         public readonly string $name,
         public readonly string $url,
         public readonly float $price = 0.00,

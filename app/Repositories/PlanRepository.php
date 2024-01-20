@@ -42,7 +42,7 @@ class PlanRepository
 
     }
 
-    public function findById(int $id): ?object
+    public function findById(string $id): ?object
     {
         return $this->plan->find($id);
     }
@@ -61,7 +61,7 @@ class PlanRepository
         return $model->update((array) $dto);
     }
 
-    public function delete(int $id): ?bool
+    public function delete(string $id): ?bool
     {
         if(! $model = $this->findById($id)){
             return null;

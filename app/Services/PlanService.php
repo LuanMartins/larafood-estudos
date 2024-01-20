@@ -27,7 +27,7 @@ class PlanService
         return $this->planRepository->getPaginate($filterPlanDto);
     }
 
-    public function findById(int $id): ?object
+    public function findById(string $id): ?object
     {
         return $this->planRepository->findById($id);
 
@@ -43,7 +43,7 @@ class PlanService
         return $this->planRepository->update($edit);
     }
 
-    public function delete(int $id): ?bool
+    public function delete(string $id): ?bool
     {
         return $this->planRepository->delete($id);
     }
