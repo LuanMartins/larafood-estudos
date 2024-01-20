@@ -47,7 +47,7 @@ class PlanRepository
         return $this->plan->find($id);
     }
 
-    public function createNew(CreatePlan $dto): ?bool
+    public function createNew(CreatePlan $dto): object
     {
         return $this->plan->create((array) $dto);
     }
