@@ -13,7 +13,7 @@ class EditPlan
         public readonly string $id,
         public readonly string $name,
         public readonly string $url,
-        public readonly float $price = 0.00,
+        public readonly float $price,
         public readonly ?string $description = null
     )
     {}
