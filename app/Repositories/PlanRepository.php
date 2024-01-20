@@ -49,7 +49,7 @@ class PlanRepository
 
     public function createNew(CreatePlan $dto): ?bool
     {
-        return $this->plan->create($dto);
+        return $this->plan->create((array) $dto);
     }
 
     public function update(EditPlan $dto): ?bool
