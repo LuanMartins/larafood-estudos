@@ -1,5 +1,6 @@
 <?php
 
+use App\DTO\Plan\CreatePlan;
 use App\DTO\Plan\FilterPlan;
 use App\Models\Plan;
 use App\Services\PlanService;
@@ -153,6 +154,72 @@ describe('service - filters get paginate', function(){
         expect(count($response->items()))->toBe(1);
         expect($response->total())->toBe(1);
         expect($response->perPage())->toBe(15);
+    });
+
+
+    test('service find plan by id', function(){
+        $createdPlan = Plan::factory()->create();
+
+        $response = $this->service->findById($createdPlan->id);
+
+        expect($response)->toBeObject(Plan::class);
+        expect($response->id)->toBeString();
+        expect($response->name)->toBeString();
+        expect($response->url)->toBeString();
+        expect($response->url)->toBeString();
+
+    });
+
+    test('service - find plan by id not found', function(){
+        Plan::factory()->create();
+
+        $response = $this->service->findById('hj3iuhuh32ui');
+
+        expect($response)->tobeNull();
+    });
+
+
+    test('service - create a new plan', function(){
+        $response = $this->service->create(
+            new CreatePlan(
+                name: 'Plan test',
+                url: 'url test',
+                price: 23.50,
+                description: 'teste teste'
+            )
+        );
+
+        $this->assertDatabaseHas('plans', ['id' => $response->id]);
+    });
+
+
+    test('service - create a new plan without description', function(){
+        $response = $this->service->create(
+            new CreatePlan(
+                name: 'Plan test',
+                url: 'url test',
+                price: 23.50,
+            )
+        );
+        expect($response->description)->toBeNull();
+        $this->assertDatabaseHas('plans', ['id' => $response->id]);
+    });
+
+
+    test('service - delete plan', function(){
+        $planCreated = Plan::factory()->create();
+
+        $response = $this->service->delete($planCreated->id);
+
+        expect($response)->toBeTrue();
+        $this->assertDatabaseMissing('plans', ['id' => $planCreated->id]);
+    });
+
+
+    test('service - delete plan not found', function(){
+        $response = $this->service->delete('ishuauashds');
+
+        expect($response)->toBeNull();
     });
 
 });
