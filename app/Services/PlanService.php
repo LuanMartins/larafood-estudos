@@ -33,6 +33,10 @@ class PlanService
 
     }
 
+    public function create(CreatePlan $create): ?object
+    {
+        return $this->planRepository->createNew($create);
+    }
 
     public function update(EditPlan $edit): ?object
     {
