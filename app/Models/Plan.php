@@ -10,5 +10,10 @@ class Plan extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $fillable = ['name','url','price'];
+
+    protected $casts = [
+        'price' => 'double'
+    ];
+
+    protected $fillable = ['name','url','price','description'];
 }
