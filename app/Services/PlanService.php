@@ -38,7 +38,7 @@ class PlanService
         return $this->planRepository->createNew($create);
     }
 
-    public function update(EditPlan $edit): ?object
+    public function update(EditPlan $edit): ?bool
     {
         return $this->planRepository->update($edit);
     }
