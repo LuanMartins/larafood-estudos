@@ -1,6 +1,7 @@
 <?php
 
 use App\DTO\Plan\CreatePlan;
+use App\DTO\Plan\EditPlan;
 use App\DTO\Plan\FilterPlan;
 use App\Models\Plan;
 use App\Services\PlanService;
@@ -203,6 +204,79 @@ describe('service - filters get paginate', function(){
         );
         expect($response->description)->toBeNull();
         $this->assertDatabaseHas('plans', ['id' => $response->id]);
+    });
+
+
+    test('service update plan without description', function(){
+        $planCreated = Plan::factory()->create();
+
+        $response = $this->service->update(
+            new EditPlan(
+                id: $planCreated->id,
+                name: $planCreated->name."updated",
+                url: $planCreated->url.'updated',
+                price: 0.25
+
+            )
+        );
+
+        $getPlanAfeterupdate = $this->service->findById($planCreated->id);
+
+        expect($response)->toBeTrue();
+        expect($planCreated->id)->toBe($getPlanAfeterupdate->id);
+        expect($planCreated->name."updated")->toBe($getPlanAfeterupdate->name);
+        expect($planCreated->url."updated")->toBe($getPlanAfeterupdate->url);
+        expect($getPlanAfeterupdate->price)->toBe(0.25);
+        expect($planCreated->description)->not->toBe($getPlanAfeterupdate->description);
+        expect($getPlanAfeterupdate->description)->tobeNull();
+        $this->assertDatabaseHas('plans', ['id' => $getPlanAfeterupdate->id]);
+
+    });
+
+    test('service update plan with description', function(){
+        $planCreated = Plan::factory()->create();
+
+        $response = $this->service->update(
+            new EditPlan(
+                id: $planCreated->id,
+                name: $planCreated->name."updated",
+                url: $planCreated->url."updated",
+                price: 0.25,
+                description: $planCreated->description."updated"
+
+            )
+        );
+
+        $getPlanAfeterupdate = $this->service->findById($planCreated->id);
+
+       // dd($getPlanAfeterupdate->toArray()['description'],$planCreated->description."updated");
+
+        expect($response)->toBeTrue();
+        expect($planCreated->id)->toBe($getPlanAfeterupdate->id);
+        expect($planCreated->name."updated")->toBe($getPlanAfeterupdate->name);
+        expect($planCreated->url."updated")->toBe($getPlanAfeterupdate->url);
+        expect($getPlanAfeterupdate->price)->toBe(0.25)->toBeNumeric();
+        expect($planCreated->description."updated")->toBe($getPlanAfeterupdate->description);
+        $this->assertDatabaseHas('plans', ['id' => $getPlanAfeterupdate->id]);
+
+    });
+
+    test('service - update plan not found', function(){
+
+        $response = $this->service->update(
+                new EditPlan(
+                    id: '123',
+                    name: "updated",
+                    url:  "updated",
+                    price: 0.25,
+                    description: "updated"
+
+                )
+            );
+
+        expect($response)->tobeNull();
+
+
     });
 
 
